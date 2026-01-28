@@ -1,53 +1,415 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABAPlorer</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
     
-    <style media="screen">
-        body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-        #message { background: white; max-width: 520px; margin: 100px auto 16px; padding: 32px 24px 16px; border-radius: 3px; }
-        #message h3 { color: #888; font-weight: normal; font-size: 16px; margin: 16px 0 12px; }
-        #message h2 { color: #EC7208; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-        #message h1 { color: #EC7208; font-weight: bold; font-size: 22px; margin: 0 0 16px; }
-        #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-        #message a { display: block; text-align: center; background: #4B8EC7; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-        #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-        #message .codeDiv { border-left: #4B8EC7 5px solid; padding-left: 7px; margin-bottom: 20px; }
-        #message .btn { background-color: #EC7208; border: none; border-radius: 5px; padding: 6px 18px; vertical-align: middle; cursor: pointer; user-select: none; color: #ffffff; }
-        #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-        #codeElement { display: block; width: 520px;}
-        @media (max-width: 600px) {
-          body, #message { margin-top: 0; background: white; box-shadow: none; }
-          body { border-top: 16px solid #EC7208; }
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <style>
+        :root {
+            --primary: #0a6ed1;
+            --accent: #ec7208;
+            --dark: #1d2d3e;
+            --light: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
-      </style>
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 1rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo-left { height: 90px; width: auto; object-fit: contain; display: block; }
+        .logo-right { height: 50px; width: auto; object-fit: contain; display: block; opacity: 0.9; }
+
+        /* Hero Section */
+        main {
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 0 20px;
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-size: 3.5rem; 
+            line-height: 1.3; 
+            margin-bottom: 1rem;
+            padding-bottom: 0.1em;
+            background: -webkit-linear-gradient(45deg, var(--dark), var(--primary));
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        p.sub-headline {
+            font-size: 1.2rem; color: #5a6b7c; max-width: 600px; margin-bottom: 3rem; line-height: 1.6;
+        }
+
+        /* --- Feature Grid --- */
+        .features {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+            max-width: 1000px; width: 100%; margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+            padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: left; transition: transform 0.3s ease;
+        }
+        .feature-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.9); }
+        .icon { font-size: 2rem; margin-bottom: 15px; display: block; }
+        .feature-card h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
+        .feature-card p { margin: 0; font-size: 0.9rem; color: #666; line-height: 1.5; }
+
+        /* --- Section Separator --- */
+        .section-separator {
+            font-size: 2rem; color: var(--primary); font-weight: 700; margin-bottom: 2rem; margin-top: 1rem;
+        }
+
+        /* --- Steps Container --- */
+        .steps-container {
+            display: flex; align-items: flex-start; 
+            justify-content: center; gap: 30px;
+            max-width: 1400px; width: 100%; margin-bottom: 4rem;
+        }
+
+        .step-box {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 25px; border-radius: 16px;
+            flex: 1; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .step-badge {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            background: var(--dark); color: white; width: 32px; height: 32px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .step-box h3 { margin: 15px 0 15px 0; font-size: 1.2rem; color: var(--primary); }
+        .step-box p { font-size: 0.95rem; line-height: 1.5; color: #444; margin: 0; }
+        .example-text { font-size: 0.9rem !important; color: #666 !important; margin-top: 10px !important; font-style: italic; }
+
+        /* --- MEDIA CONTAINER (VIDEO) --- */
+        .step-media-container {
+            display: inline-block; 
+            max-width: 100%;
+            background: #ffffff; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            margin-top: 15px;
+            overflow: hidden; 
+            border: 2px solid white;
+            line-height: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            cursor: zoom-in; 
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .step-media-container:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        /* HIER: Video statt img stylen */
+        .step-media-container img, 
+        .step-media-container video { 
+            max-width: 100%; 
+            height: auto; 
+            max-height: 350px; 
+            object-fit: contain; 
+            display: block;
+        }
+        
+        .placeholder-txt { color: #999; font-style: italic; font-size: 0.8rem; padding: 10px; line-height: normal; display: block;}
+
+        code {
+            background: #eef4fb; color: var(--primary);
+            padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; border: 1px solid #dcebf9;
+        }
+
+        .step-arrow { display: flex; align-items: center; font-size: 2rem; color: #999; margin-top: 150px; }
+
+        /* --- BUTTON WRAPPER --- */
+        .button-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cta-button {
+            display: inline-flex; align-items: center;
+            background-color: var(--accent); color: white;
+            padding: 12px 30px; border-radius: 50px;
+            font-size: 1rem; font-weight: 600; text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(236, 114, 8, 0.3);
+            margin-bottom: 5px; cursor: pointer;
+            z-index: 10;
+        }
+        
+        .cta-button.draggable { cursor: move; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(236, 114, 8, 0.4); background-color: #d66606; }
+        .cta-button svg { margin-right: 8px; fill: currentColor; }
+        
+        /* --- TOOLTIP BUBBLE STYLE --- */
+        .tooltip-bubble {
+            position: absolute;
+            bottom: 120%; /* Über dem Button */
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 20;
+        }
+
+        .tooltip-bubble::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip-bubble.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .drag-hint { font-size: 0.8rem; color: #888; font-style: italic; margin-top: 5px; }
+        
+        .or-divider {
+            display: flex; align-items: center; width: 100%; margin: 20px 0;
+            color: #888; font-size: 0.9rem; font-weight: bold; text-transform: uppercase;
+        }
+        .or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background-color: #ccc; margin: 0 10px; }
+
+        footer { padding: 2rem; font-size: 0.8rem; color: #888; text-align: center; }
+
+        /* --- MODAL (LIGHTBOX) STYLES --- */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto;
+            background-color: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            margin: auto; display: block;
+            max-width: 90%; max-height: 90vh;
+            border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            outline: none; /* Kein blauer Rahmen bei Video */
+        }
+
+        .close {
+            position: absolute; top: 20px; right: 35px;
+            color: #f1f1f1; font-size: 40px; font-weight: bold;
+            transition: 0.3s; cursor: pointer; z-index: 1001;
+        }
+
+        .close:hover, .close:focus { color: var(--accent); text-decoration: none; cursor: pointer; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 1100px) {
+            h1 { font-size: 2.5rem; }
+            .steps-container { flex-direction: column; gap: 40px; align-items: center; } 
+            .step-arrow { transform: rotate(90deg); margin: 0; align-self: center; }
+            .features { grid-template-columns: 1fr; margin-bottom: 3rem; }
+            nav { padding: 1.5rem; }
+            .logo-left { height: 60px; }
+            .step-box { width: 100%; max-width: 600px; }
+        }
+    </style>
 </head>
-
 <body>
-    <div id="message">
-        <h1>Load ABAPlorer</h1>
-        <p>Copy the code below and run in the console of SAP webpage:</p>
 
-        <div class="codeDiv"><code id="codeElement"></code></div>
-        <button class="btn" onclick="copyCode()">Copy</button>
+    <nav>
+        <div><img src="logo.png" alt="ABAPlorer Logo" class="logo-left"></div>
+        <div><img src="caleo.png" alt="Caleo Consulting" class="logo-right"></div>
+    </nav>
+
+    <main>
+        <h1>Development<br>Beyond GUI.</h1>
+        <p class="sub-headline">
+            The modern toolkit for SAP developers.
+            SQL Console, DDIC Search, and system tools directly in your browser.
+        </p>
+
+        <div class="features">
+            <div class="feature-card">
+                <span class="icon">🚀</span>
+                <h3>Instant Access</h3>
+                <p>No waiting times. Run SQL queries and object searches directly in the active tab.</p>
+            </div>
+            <div class="feature-card">
+                <span class="icon">✨</span>
+                <h3>Modern UI</h3>
+                <p>Based on SAP Fiori Design Guidelines for a familiar and clean interface.</p>
+            </div>
+            <div class="feature-card">
+                <span class="icon">🔌</span>
+                <h3>System Bridge</h3>
+                <p>Connect seamlessly with backend systems without leaving the browser.</p>
+            </div>
+        </div>
+
+        <h2 class="section-separator">How to start ABAPlorer</h2>
+
+        <div class="steps-container">
+            
+            <div class="step-box">
+                <div class="step-badge">1</div>
+                <h3>Create Bookmark</h3>
+                <div class="step-media-container" onclick="openModal(this)">
+                    <video autoplay loop muted playsinline>
+                        <source src="createBookmark.webm" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div class="button-wrapper">
+                    <div id="dragTooltip" class="tooltip-bubble">Don't click! Drag me to bookmarks.</div>
+
+                    <a href="javascript:(function(){let appLoader=document.createElement('script');appLoader.src='https://caleo-consulting.github.io/ABAPlorer/start.js';document.head.appendChild(appLoader);})();" 
+                       class="cta-button draggable" 
+                       title="Drag button to bookmarks!"
+                       onclick="showTooltip(event)">
+                        
+                        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg> 
+                        ABAPlorer
+                    </a>
+                </div>
+                <span class="drag-hint">Drag the button to your bookmarks bar!</span>
+            </div>
+
+            <div class="step-arrow">➜</div>
+
+            <div class="step-box">
+                <div class="step-badge">2</div>
+                <h3>Open Target System in Browser</h3>
+                <p>Log in to your SAP system in the browser.</p>
+                <div class="step-media-container" onclick="openModal(this)">
+                    <video autoplay loop muted playsinline>
+                        <source src="startWebGui.webm" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p class="example-text">Example: Start transaction <code>WEBGUI</code> via SAP Logon.</p>
+            </div>
+
+            <div class="step-arrow">➜</div>
+
+            <div class="step-box">
+                <div class="step-badge">3</div>
+                <h3>Launch Tool</h3>
+                <div class="step-media-container" onclick="openModal(this)">
+                     <video autoplay loop muted playsinline>
+                        <source src="startAbaplorer.webm" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p style="margin-bottom: 5px;">Simply click on the created bookmark.</p>
+                <div class="or-divider">OR</div>
+                <a href="javascript:(function(){let appLoader=document.createElement('script');appLoader.src='https://caleo-consulting.github.io/ABAPlorer/start.js';document.head.appendChild(appLoader);})();" class="cta-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Start ABAPlorer (Demo)
+                </a>
+		<p class="example-text">Only Demo-Modus. No system data</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 CALEO Consulting GmbH
+    </footer>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <video class="modal-content" id="modalVideo" autoplay loop controls></video>
     </div>
 
     <script>
-        let jsCode =
-            `let appLoader = document.createElement('script');
-appLoader.src = 'https://caleo-consulting.github.io/ABAPlorer/start.js';
-document.head.appendChild(appLoader);`;
-
-        function copyCode() {
-            navigator.clipboard.writeText(jsCode);
+        // --- Tooltip Function ---
+        function showTooltip(e) {
+            e.preventDefault(); 
+            var tooltip = document.getElementById("dragTooltip");
+            
+            tooltip.classList.add("show");
+            
+            setTimeout(function() {
+                tooltip.classList.remove("show");
+            }, 3000);
         }
 
-        document.getElementById('codeElement').innerText = jsCode;
-    </script>
-</body>
+        // --- Lightbox Functions (Video) ---
+        function openModal(container) {
+            var modal = document.getElementById("imageModal");
+            var modalVideo = document.getElementById("modalVideo");
+            
+            // Das Video Element im geklickten Container finden
+            var sourceVideo = container.querySelector('video');
+            if (sourceVideo) {
+                // Die Quelle (src) des <source> Tags im Video finden
+                var sourceFile = sourceVideo.querySelector('source').src;
+                
+                modal.style.display = "block";
+                modalVideo.src = sourceFile;
+                
+                // Video im Modal abspielen
+                modalVideo.play();
+            }
+        }
 
+        function closeModal() {
+            var modal = document.getElementById("imageModal");
+            var modalVideo = document.getElementById("modalVideo");
+            
+            modal.style.display = "none";
+            
+            // Video stoppen und Quelle leeren
+            modalVideo.pause();
+            modalVideo.src = "";
+        }
+
+        // Close on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
 </html>
