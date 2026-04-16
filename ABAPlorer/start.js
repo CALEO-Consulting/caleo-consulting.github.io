@@ -16,7 +16,7 @@ function generateApp() {
             </style>
             <script
                 id="sap-ui-bootstrap"
-                src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+                src="https://sapui5.hana.ondemand.com/1.146.0/resources/sap-ui-core.js"
                 data-sap-ui-theme="sap_horizon"
                 data-sap-ui-resourceroots='{
                     "astrobear.abaplorer": "./"
