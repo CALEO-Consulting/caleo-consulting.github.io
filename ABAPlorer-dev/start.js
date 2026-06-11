@@ -1,6 +1,6 @@
 function generateApp() {
     delete sap;
-
+    
     let app = `
         <!DOCTYPE html>
         <html lang="en">
