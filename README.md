@@ -12,3 +12,9 @@ let appLoader=document.createElement('script');
 appLoader.src='https://caleo-consulting.github.io/ABAPlorer-dev/start.js';
 document.head.appendChild(appLoader);
 ```
+# Set up Dataspherer via JS
+```javascript
+let appLoader=document.createElement('script');
+appLoader.src='https://caleo-consulting.github.io/Dataspherer/start.js';
+document.head.appendChild(appLoader);
+```
