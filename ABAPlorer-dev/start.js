@@ -121,11 +121,11 @@ function generateApp() {
    data-tc-side attribute the controller writes (see _sourceSide); :has lets
    the tint fill the whole table cell, not just the text span. */
 .sapUiTableCell:has(.abaplorerTcSource[data-tc-side="a"]) {
-  background-color: var(--sapIndicationColor_5b, var(--sapInformationBackgroundColor, #e1f4ff));
+  background-color: var(--sapIndicationColor_5b, #d9ebff);
 }
 
 .sapUiTableCell:has(.abaplorerTcSource[data-tc-side="b"]) {
-  background-color: var(--sapIndicationColor_2b, var(--sapWarningBackgroundColor, #fff3b8));
+  background-color: var(--sapIndicationColor_3b, #ffdfc3);
 }
 
 .abaplorerTcSource.sapMText {
