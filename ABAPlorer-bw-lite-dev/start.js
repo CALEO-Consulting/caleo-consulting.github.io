@@ -132,6 +132,17 @@ function generateApp() {
   color: var(--sapTextColor, #1d2d3e);
 }
 
+/* BW/4 readiness dashboard: the data bar left of a pivot count. Its width
+   is bound per row (a class cannot be), against the largest sibling group.
+   The bar is an empty sap.m.HBox; .sapMFlexBox is repeated to outrank the
+   transparent background its own style sheet gives it. */
+.sapMFlexBox.abaplorerDataBar {
+  height: 0.625rem;
+  border-radius: 0.125rem;
+  background-color: var(--sapInformativeElementColor, #0070f2);
+  opacity: 0.45;
+}
+
 /* Document Entries: the filter form scrolls on its own once it outgrows a
    third of the screen, so a long filter never pushes the result away. */
 .abaplorerDeConditions {
