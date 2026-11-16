@@ -149,6 +149,19 @@ function generateApp() {
   max-height: 35vh;
 }
 
+/* Consolidation Monitor Status (#629): a segment of a task's progress bar fills the share it is given.
+   The colour of an inverted ObjectStatus sits on its text element, so that is what stretches. */
+.consMonBar.sapMObjStatus {
+  display: flex;
+  width: 100%;
+}
+.consMonBar.sapMObjStatus .sapMObjStatusText {
+  flex: 1 1 auto;
+  text-align: center;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
             </style>
         </head>
         <body class="sapUiBody sapUiSizeCompact" id="content">
